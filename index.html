@@ -30,7 +30,6 @@
             height: 100vh;
             color: var(--pk-text);
             overflow: hidden;
-            transition: background-image 0.5s ease-in-out;
         }
 
         body::before {
@@ -41,74 +40,72 @@
             z-index: -1;
         }
 
-        /* --- LA POKEBALL DE DECORATION (FOND) --- */
-        .pokeball-bg {
-            position: fixed;
-            bottom: -50px;
-            right: -50px;
-            width: 300px;
-            height: 300px;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg') no-repeat center;
-            background-size: contain;
-            opacity: 0.05; /* Très discret */
-            z-index: -1;
-            filter: grayscale(1) invert(1);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .container { flex: 1; padding: 40px; overflow-y: auto; position: relative; }
+        .container { flex: 1; padding: 40px; padding-bottom: 100px; overflow-y: auto; position: relative; }
 
         .header {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            margin-bottom: 35px;
+            margin-bottom: 25px;
             border-bottom: 4px solid var(--pk-red);
             padding-bottom: 15px;
         }
 
-        /* Titre avec icône Pokéball */
-        h1 { 
-            margin: 0; 
-            font-weight: 900; 
-            text-transform: uppercase; 
-            font-size: 1.5rem; 
-            flex-grow: 1; 
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        h1::before {
-            content: "";
-            width: 30px;
-            height: 30px;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg') no-repeat center;
-            background-size: contain;
-        }
+        h1 { margin: 0; font-weight: 900; text-transform: uppercase; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
 
-        .bg-selector {
-            display: flex;
+        /* Styles de la Modale d'Import */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
             align-items: center;
-            gap: 10px;
-            background: rgba(0,0,0,0.3);
-            padding: 5px 15px;
-            border-radius: 30px;
+            z-index: 200;
+        }
+        .modal-content {
+            background: #1a1a1a;
+            width: 500px;
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--pk-blue);
+            box-shadow: 0 0 30px rgba(0, 162, 255, 0.2);
+        }
+        .modal-content h3 { margin-top: 0; text-transform: uppercase; font-size: 0.9rem; color: var(--pk-blue); }
+        .modal-content textarea {
+            width: 100%;
+            height: 200px;
+            background: #000;
             border: 1px solid var(--pk-border);
-            margin-right: 20px;
+            border-radius: 10px;
+            color: white;
+            padding: 15px;
+            font-family: inherit;
+            resize: none;
+            margin: 15px 0;
+            box-sizing: border-box;
         }
-        .bg-arrow { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; font-weight: 900; transition: 0.2s; }
-        .bg-arrow:hover { color: var(--pk-red); transform: scale(1.2); }
-        .bg-label { font-size: 0.6rem; font-weight: 900; text-transform: uppercase; color: #aaa; }
 
-        .btn { border: none; padding: 12px 22px; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.75rem; color: white; }
-        .btn-std { background-color: var(--pk-blue); box-shadow: 0 4px 15px rgba(0, 162, 255, 0.3); }
-        .btn-asex { background-color: var(--pk-purple); box-shadow: 0 4px 15px rgba(165, 94, 234, 0.3); }
-        .btn:hover { transform: translateY(-3px); filter: brightness(1.2); }
+        .floating-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateX(-225px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 10px 25px;
+            border-radius: 50px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            border: 1px solid var(--pk-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 100;
+        }
+
+        .btn { border: none; padding: 10px 18px; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.7rem; color: white; }
+        .btn-std { background-color: var(--pk-blue); }
+        .btn-asex { background-color: var(--pk-purple); }
+        .btn-import-trigger { background-color: var(--pk-green); color: black; }
+        .btn-reset { background-color: #444; }
 
         .pk-card {
             background: var(--pk-card-bg);
@@ -119,258 +116,239 @@
             margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 30px;
+            gap: 20px;
             border-left: 7px solid var(--pk-blue);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-
         .pk-card.is-asex { border-left-color: var(--pk-purple); }
 
-        .input-box { flex: 1; }
-        .input-box label { display: block; font-size: 10px; font-weight: 900; color: #aaa; margin-bottom: 10px; text-transform: uppercase; }
-        
-        input, select {
-            width: 100%;
-            padding: 11px 15px;
-            background: var(--pk-input-bg);
-            border: 1px solid var(--pk-border);
-            border-radius: 10px;
-            font-family: inherit;
-            font-weight: 700;
-            color: white;
-            outline: none;
-            font-size: 0.9rem;
-        }
+        .input-box label { display: block; font-size: 10px; font-weight: 900; color: #aaa; margin-bottom: 8px; text-transform: uppercase; }
+        input, select { width: 100%; padding: 10px 14px; background: var(--pk-input-bg); border: 1px solid var(--pk-border); border-radius: 10px; font-weight: 700; color: white; outline: none; box-sizing: border-box; }
 
-        .services { display: flex; gap: 15px; }
-        .check-item { display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.8rem; cursor: pointer; }
+        .services-group { display: flex; gap: 15px; align-items: center; height: 44px; }
+        .check-item { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+        .check-item input { width: 18px; height: 18px; margin: 0; cursor: pointer; }
+        .check-item span { font-size: 10px; font-weight: 900; color: #fff; }
 
-        .btn-del {
-            background: rgba(255, 60, 60, 0.1);
-            color: var(--pk-red);
-            border: 1px solid var(--pk-red);
-            width: 42px; height: 42px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .btn-del { background: rgba(255, 60, 60, 0.1); color: var(--pk-red); border: 1px solid var(--pk-red); width: 42px; height: 42px; border-radius: 12px; cursor: pointer; font-weight: 900; }
 
         .sidebar {
-            width: 420px;
+            width: 450px;
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(10px);
             padding: 30px;
             display: flex;
             flex-direction: column;
             border-left: 1px solid var(--pk-border);
-            position: relative;
+            z-index: 101;
         }
 
-        .recap-item {
-            background: rgba(255,255,255,0.05);
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 12px;
-            border-right: 4px solid var(--pk-red);
-        }
+        .sidebar-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--pk-border); }
 
-        .recap-item .price { float: right; color: var(--pk-green); font-weight: 900; font-size: 1rem; }
+        .recap-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .poke-counter { background: var(--pk-red); color: white; padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: 900; }
+
+        .recap-list-container { flex:1; overflow-y:auto; padding-right: 10px; }
+        .recap-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; margin-bottom: 12px; border-right: 4px solid var(--pk-red); }
+        .recap-item .price { float: right; color: var(--pk-green); font-weight: 900; }
         .recap-details { font-size: 0.75rem; color: #bbb; margin-top: 5px; line-height: 1.4; }
-        .badge-type { font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; font-weight: 900; margin-right: 5px; }
-        .badge-std { background: var(--pk-blue); color: white; }
-        .badge-asex { background: var(--pk-purple); color: white; }
 
-        .old-price { text-decoration: line-through; color: #ff3c3c; opacity: 0.7; margin-right: 5px; }
-        .new-price { color: var(--pk-green); font-weight: 900; }
+        .discount-section { margin-top: 10px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 15px; text-align: center; }
+        .btn-disc { flex: 1; padding: 8px; font-size: 0.65rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: white; cursor: pointer; font-weight: 800; }
+        .btn-disc.active { background: white; color: black; }
 
-        .discount-section {
-            margin-top: 10px;
-            padding: 15px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 15px;
-            text-align: center;
-        }
-        .discount-title { font-size: 0.7rem; font-weight: 900; color: #888; text-transform: uppercase; margin-bottom: 10px; display: block; }
-        .discount-btns { display: flex; gap: 8px; justify-content: center; }
-        .btn-disc { 
-            flex: 1; padding: 8px; font-size: 0.65rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
-            background: transparent; color: white; cursor: pointer; font-weight: 800; transition: 0.2s;
-        }
-        .btn-disc.active { background: white; color: black; border-color: white; }
-
-        .footer-total {
-            background: var(--pk-card-bg);
-            border: 1px solid var(--pk-border);
-            color: var(--pk-text);
-            padding: 25px;
-            border-radius: 18px;
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        .total-amount { font-size: 2.2rem; font-weight: 900; color: var(--pk-red); }
+        .footer-total { background: var(--pk-card-bg); padding: 20px; border-radius: 18px; text-align: center; margin-top: 15px; border: 1px solid var(--pk-border); }
+        .total-amount { font-size: 2rem; font-weight: 900; color: var(--pk-red); display: block; }
+        .btn-copy { width: 100%; margin-top: 15px; background: var(--pk-green); color: black; font-weight: 900; border: none; padding: 15px; border-radius: 12px; cursor: pointer; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
-<div class="pokeball-bg"></div>
+<div class="modal-overlay" id="importModal">
+    <div class="modal-content">
+        <h3>📥 Importer une liste</h3>
+        <p style="font-size: 0.7rem; color: #888;">Colle ta liste (Regroupement automatique activé) :</p>
+        <textarea id="import-area" placeholder="Exemple :&#10;Nom du pokémon: Kangourex&#10;Talent(s): Querelleur&#10;Nature(s): Jovial..."></textarea>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn btn-import-trigger" style="flex: 2;" onclick="processImport()">⚡ Lancer l'import</button>
+            <button class="btn" style="flex: 1; background: #333;" onclick="closeModal()">Annuler</button>
+        </div>
+    </div>
+</div>
 
 <div class="container">
-    <div class="header">
-        <h1>Astralya by Jrm</h1>
-        
-        <div class="bg-selector">
-            <span class="bg-label">Fond</span>
-            <button class="bg-arrow" onclick="changeBG(-1)">❮</button>
-            <button class="bg-arrow" onclick="changeBG(1)">❯</button>
-        </div>
-
+    <div class="header"><h1>Astralya by Jrm</h1></div>
+    <div id="pokes-list"></div>
+    <div class="floating-bar">
         <button class="btn btn-std" onclick="addRow(false)">+ Pokémon</button>
         <button class="btn btn-asex" onclick="addRow(true)">+ Asexué</button>
+        <button class="btn btn-import-trigger" onclick="openModal()">📥 Importer</button>
+        <button class="btn btn-reset" onclick="resetApp()">Vider tout</button>
     </div>
-    <div id="pokes-list"></div>
 </div>
 
 <div class="sidebar">
-    <h2 style="text-align:center; color:var(--pk-red); text-transform:uppercase; font-size: 1.1rem; margin-bottom: 30px;">Détails de la commande</h2>
-    <div id="recap-list" style="flex:1; overflow-y:auto; padding-right: 10px;"></div>
-    
+    <h2 style="text-align:center; color:var(--pk-red); text-transform:uppercase; font-size: 1.1rem; margin-bottom: 20px;">Détails de la commande</h2>
+    <div class="sidebar-inputs">
+        <div class="input-box"><label>Client</label><input type="text" id="client-name" placeholder="Client" oninput="update()"></div>
+        <div class="input-box"><label>Breeder</label><input type="text" id="breeder-name" placeholder="Breeder" oninput="update()"></div>
+    </div>
+    <div class="recap-header">
+        <span style="font-size: 0.8rem; font-weight: 800; color: #aaa;">RÉCAPITULATIF</span>
+        <span class="poke-counter" id="total-qty-badge">0 Pokémon</span>
+    </div>
+    <div id="recap-list" class="recap-list-container"></div>
     <div class="discount-section">
-        <span class="discount-title">Réductions (Prix du Pokémon uniquement)</span>
-        <div class="discount-btns">
-            <button class="btn-disc" id="disc-0" onclick="setDiscount(0, this)">Aucune</button>
-            <button class="btn-disc" id="disc-25" onclick="setDiscount(0.25, this)">Skyschool (-25%)</button>
-            <button class="btn-disc" id="disc-50" onclick="setDiscount(0.5, this)">Faction (-50%)</button>
+        <div style="display:flex; gap:8px;">
+            <button class="btn-disc active" id="disc-0" onclick="setDiscount(0, 'Aucune', this)">Aucune</button>
+            <button class="btn-disc" id="disc-25" onclick="setDiscount(0.25, 'Skyschool', this)">Skyschool</button>
+            <button class="btn-disc" id="disc-50" onclick="setDiscount(0.5, 'Faction', this)">Faction</button>
         </div>
     </div>
-
     <div class="footer-total">
-        <span style="font-weight:900; font-size:0.75rem; color:#888; display: block; margin-bottom: 5px;" id="total-label">TOTAL À RÉGLER</span>
         <span class="total-amount" id="grand-total">0 $</span>
+        <button class="btn-copy" onclick="copyTicket()">📋 Copier le ticket</button>
     </div>
 </div>
 
 <script>
     let idCounter = 0;
     let currentDiscount = 0;
+    let currentDiscountName = "Aucune";
+    const PRICES = { std: 90000, stdDW: 120000, asex: 1000000, asexDW: 1200000, evs: 70000, moves: 20000, xp: 50000 };
 
-    const backgrounds = ['test.png', 'nexios.png', 'goat.png'];
-    let currentBGIndex = 0;
+    function openModal() { document.getElementById('importModal').style.display = 'flex'; }
+    function closeModal() { document.getElementById('importModal').style.display = 'none'; }
 
-    function changeBG(direction) {
-        currentBGIndex += direction;
-        if (currentBGIndex < 0) currentBGIndex = backgrounds.length - 1;
-        if (currentBGIndex >= backgrounds.length) currentBGIndex = 0;
-        document.body.style.backgroundImage = `url('${backgrounds[currentBGIndex]}')`;
-    }
-
-    const PRICES = { 
-        std: 90000, 
-        stdDW: 120000, 
-        asex: 1000000, 
-        asexDW: 1200000, 
-        evs: 70000, 
-        moves: 20000,
-        xp: 50000 
-    };
-
-    function setDiscount(val, btn) {
+    function setDiscount(val, name, btn) {
         currentDiscount = val;
+        currentDiscountName = name;
         document.querySelectorAll('.btn-disc').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         update();
     }
 
-    function formatPrice(amount) {
-        if (amount >= 1000000) {
-            return (amount / 1000000).toFixed(2).replace('.00', '') + " M $";
-        } else {
-            return (amount / 1000).toLocaleString() + " k $";
-        }
-    }
-
-    function addRow(isAsex) {
+    function addRow(isAsex, data = null) {
         idCounter++;
         const id = idCounter;
-        const typeClass = isAsex ? 'is-asex' : '';
         const html = `
-            <div class="pk-card ${typeClass}" id="row-${id}" data-asex="${isAsex}">
-                <div class="input-box">
-                    <label>Nom du Pokémon</label>
-                    <input type="text" placeholder="..." id="name-${id}" oninput="update()">
-                </div>
-                <div class="input-box">
-                    <label>Talent</label>
-                    <select id="talent-${id}" onchange="update()">
-                        <option value="normal">Sans DW</option>
-                        <option value="dw">DW</option>
-                    </select>
-                </div>
-                <div class="input-box">
-                    <label>Services</label>
-                    <div class="services">
-                        <label class="check-item"><input type="checkbox" id="ev-${id}" onchange="update()"> EVs</label>
-                        <label class="check-item"><input type="checkbox" id="atq-${id}" onchange="update()"> ATQ</label>
-                        <label class="check-item"><input type="checkbox" id="xp-${id}" onchange="update()"> XP</label>
-                    </div>
-                </div>
-                <button class="btn-del" onclick="removeRow(${id})">✕</button>
-            </div>
-        `;
+            <div class="pk-card ${isAsex ? 'is-asex' : ''}" id="row-${id}" data-asex="${isAsex}">
+                <div class="input-box" style="width:70px"><label>Qté</label><input type="number" value="${data?.qty || 1}" min="1" id="qty-${id}" oninput="update()"></div>
+                <div class="input-box" style="flex:1.5"><label>Nom</label><input type="text" value="${data?.name || ''}" id="name-${id}" oninput="update()"></div>
+                <div class="input-box" style="flex:1"><label>Nature</label><input type="text" value="${data?.nature || ''}" id="nature-${id}" oninput="update()"></div>
+                <div class="input-box" style="flex:1.2"><label>Talent</label><select id="talent-${id}" onchange="update()">
+                    <option value="normal" ${data?.dw ? '' : 'selected'}>Normal</option>
+                    <option value="dw" ${data?.dw ? 'selected' : ''}>DW / TC</option>
+                </select></div>
+                <div class="input-box" style="flex:2"><label>Services</label><div class="services-group">
+                    <label class="check-item"><input type="checkbox" id="ev-${id}" onchange="update()"><span>EVS</span></label>
+                    <label class="check-item"><input type="checkbox" id="atq-${id}" onchange="update()"><span>ATQ</span></label>
+                    <label class="check-item"><input type="checkbox" id="xp-${id}" onchange="update()"><span>XP</span></label>
+                </div></div>
+                <button class="btn-del" onclick="document.getElementById('row-${id}').remove(); update();">✕</button>
+            </div>`;
         document.getElementById('pokes-list').insertAdjacentHTML('beforeend', html);
         update();
     }
 
-    function removeRow(id) {
-        document.getElementById(`row-${id}`).remove();
-        update();
+    function processImport() {
+        const text = document.getElementById('import-area').value;
+        const lines = text.split('\n');
+        let importedList = [];
+        let currentPoke = null;
+
+        lines.forEach(line => {
+            const clean = line.trim();
+            if (clean.toLowerCase().startsWith('nom du pokémon:')) {
+                if (currentPoke) importedList.push(currentPoke);
+                currentPoke = { name: clean.split(':')[1].trim(), nature: '', dw: false, qty: 1 };
+            } else if (clean.toLowerCase().startsWith('talent(s):')) {
+                if (currentPoke && (clean.toLowerCase().includes('(tc)') || clean.toLowerCase().includes('dw'))) currentPoke.dw = true;
+            } else if (clean.toLowerCase().startsWith('nature(s):')) {
+                if (currentPoke) currentPoke.nature = clean.split(':')[1].trim();
+            }
+        });
+        if (currentPoke) importedList.push(currentPoke);
+
+        // --- ALGORITHME DE REGROUPEMENT ---
+        let grouped = [];
+        importedList.forEach(item => {
+            // On cherche si un Pokémon identique existe déjà
+            let match = grouped.find(g => 
+                g.name.toLowerCase() === item.name.toLowerCase() && 
+                g.nature.toLowerCase() === item.nature.toLowerCase() && 
+                g.dw === item.dw
+            );
+            if (match) {
+                match.qty += 1; // Si trouvé, on augmente la quantité
+            } else {
+                grouped.push(item); // Sinon on ajoute un nouveau bloc
+            }
+        });
+
+        grouped.forEach(poke => addRow(false, poke));
+        document.getElementById('import-area').value = '';
+        closeModal();
     }
 
     function update() {
         const rows = document.querySelectorAll('.pk-card');
         const recap = document.getElementById('recap-list');
-        let totalGeneral = 0;
+        let totalFinal = 0, totalQty = 0;
         recap.innerHTML = '';
 
         rows.forEach(row => {
             const id = row.id.split('-')[1];
+            const qty = parseInt(document.getElementById(`qty-${id}`).value) || 1;
+            totalQty += qty;
             const isAsex = row.getAttribute('data-asex') === 'true';
             const name = document.getElementById(`name-${id}`).value || "Inconnu";
+            const nature = document.getElementById(`nature-${id}`).value;
             const isDW = document.getElementById(`talent-${id}`).value === 'dw';
-            const hasEv = document.getElementById(`ev-${id}`).checked;
-            const hasAtq = document.getElementById(`atq-${id}`).checked;
-            const hasXp = document.getElementById(`xp-${id}`).checked;
+            
+            let base = isAsex ? (isDW ? PRICES.asexDW : PRICES.asex) : (isDW ? PRICES.stdDW : PRICES.std);
+            let dBase = base * (1 - currentDiscount);
+            let srv = (document.getElementById(`ev-${id}`).checked ? PRICES.evs : 0) + (document.getElementById(`atq-${id}`).checked ? PRICES.moves : 0) + (document.getElementById(`xp-${id}`).checked ? PRICES.xp : 0);
 
-            let basePrice = isAsex ? (isDW ? PRICES.asexDW : PRICES.asex) : (isDW ? PRICES.stdDW : PRICES.std);
-            let discountedBase = basePrice * (1 - currentDiscount);
-            let baseDisplay = currentDiscount > 0 ? `<span class="old-price">${basePrice.toLocaleString()} $</span> <span class="new-price">${discountedBase.toLocaleString()} $</span>` : `<span>${basePrice.toLocaleString()} $</span>`;
-
-            let servicesHtml = '';
-            let servicesPrice = 0;
-            if(hasEv) { servicesPrice += PRICES.evs; servicesHtml += `+ EVs (${PRICES.evs.toLocaleString()} $)<br>`; }
-            if(hasAtq) { servicesPrice += PRICES.moves; servicesHtml += `+ ATQ (${PRICES.moves.toLocaleString()} $)<br>`; }
-            if(hasXp) { servicesPrice += PRICES.xp; servicesHtml += `+ XP (${PRICES.xp.toLocaleString()} $)<br>`; }
-
-            let rowTotal = discountedBase + servicesPrice;
-            totalGeneral += rowTotal;
-
+            totalFinal += (dBase + srv) * qty;
             recap.innerHTML += `
                 <div class="recap-item">
-                    <span class="price">${rowTotal.toLocaleString()} $</span>
-                    <span class="badge-type ${isAsex ? 'badge-asex' : 'badge-std'}">${isAsex ? 'Asexué' : 'Normal'}</span>
-                    <b style="color:${isAsex ? 'var(--pk-purple)' : 'var(--pk-blue)'}">${name}</b><br>
-                    <div class="recap-details">Base ${isDW ? '(DW)' : ''} : ${baseDisplay}<br>${servicesHtml}</div>
-                </div>
-            `;
+                    <span class="price">${((dBase + srv) * qty).toLocaleString()} $</span>
+                    <b style="color:${isAsex ? 'var(--pk-purple)' : 'var(--pk-blue)'}">${qty}x ${name}</b><br>
+                    <div class="recap-details">${nature ? 'Nature : '+nature+'<br>' : ''}Talent : ${isDW ? 'DW / TC' : 'Normal'}</div>
+                </div>`;
         });
-        document.getElementById('grand-total').innerText = formatPrice(totalGeneral);
+        document.getElementById('grand-total').innerText = totalFinal.toLocaleString() + " $";
+        document.getElementById('total-qty-badge').innerText = `${totalQty} Pokémon`;
     }
 
+    function copyTicket() {
+        const client = document.getElementById('client-name').value || "Non spécifié";
+        const breeder = document.getElementById('breeder-name').value || "Non spécifié";
+        let text = `═══ 🏷️ TICKET ASTRALYA ═══\n👤 CLIENT : ${client}\n🛠️ BREEDER : ${breeder}\n📉 RÉDUC : ${currentDiscountName}\n\n`;
+        let tFinal = 0, totalPokes = 0;
+        
+        document.querySelectorAll('.pk-card').forEach(row => {
+            const id = row.id.split('-')[1];
+            const qty = parseInt(document.getElementById(`qty-${id}`).value) || 1;
+            totalPokes += qty;
+            const name = (document.getElementById(`name-${id}`).value || "Pokémon").toUpperCase();
+            const nature = document.getElementById(`nature-${id}`).value;
+            const isAsex = row.getAttribute('data-asex') === 'true';
+            const isDW = document.getElementById(`talent-${id}`).value === 'dw';
+            
+            let base = (isAsex ? (isDW ? PRICES.asexDW : PRICES.asex) : (isDW ? PRICES.stdDW : PRICES.std)) * (1 - currentDiscount);
+            let srvTotal = (document.getElementById(`ev-${id}`).checked ? PRICES.evs : 0) + (document.getElementById(`atq-${id}`).checked ? PRICES.moves : 0) + (document.getElementById(`xp-${id}`).checked ? PRICES.xp : 0);
+            
+            tFinal += (base + srvTotal) * qty;
+            text += `• ${qty}x ${name}\n${nature ? '  └─ Nature : '+nature+'\n' : ''}  └─ Talent : ${isDW?'DW / TC':'Normal'}\n  > Sous-total : ${((base + srvTotal)*qty).toLocaleString()} $\n\n`;
+        });
+        text += `------------------------------\n📦 TOTAL POKES : ${totalPokes}\n💰 PRIX FINAL : ${tFinal.toLocaleString()} $\n══════════════════════════════`;
+        navigator.clipboard.writeText(text);
+        alert("Ticket copié !");
+    }
+
+    function resetApp() { if(confirm("Vider tout ?")) { document.getElementById('pokes-list').innerHTML = ""; update(); } }
     addRow(false);
-    document.getElementById('disc-0').classList.add('active');
 </script>
 </body>
 </html>
