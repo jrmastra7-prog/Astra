@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astralya - Commande</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pk-red: #ff3c3c;
+            --pk-blue: #00a2ff;
+            --pk-purple: #a55eea;
+            --pk-green: #2ed573;
+            --pk-dark-bg: #121212;
+            --pk-card-bg: rgba(20, 20, 20, 0.85);
+            --pk-text: #ffffff;
+            --pk-input-bg: rgba(0, 0, 0, 0.4);
+            --pk-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--pk-dark-bg);
+            background-image: url('test.png'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            color: var(--pk-text);
+            overflow: hidden;
+            transition: background-image 0.5s ease-in-out;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        /* --- LA POKEBALL DE DECORATION (FOND) --- */
+        .pokeball-bg {
+            position: fixed;
+            bottom: -50px;
+            right: -50px;
+            width: 300px;
+            height: 300px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg') no-repeat center;
+            background-size: contain;
+            opacity: 0.05; /* Très discret */
+            z-index: -1;
+            filter: grayscale(1) invert(1);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .container { flex: 1; padding: 40px; overflow-y: auto; position: relative; }
+
+        .header {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 35px;
+            border-bottom: 4px solid var(--pk-red);
+            padding-bottom: 15px;
+        }
+
+        /* Titre avec icône Pokéball */
+        h1 { 
+            margin: 0; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            font-size: 1.5rem; 
+            flex-grow: 1; 
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h1::before {
+            content: "";
+            width: 30px;
+            height: 30px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg') no-repeat center;
+            background-size: contain;
+        }
+
+        .bg-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.3);
+            padding: 5px 15px;
+            border-radius: 30px;
+            border: 1px solid var(--pk-border);
+            margin-right: 20px;
+        }
+        .bg-arrow { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; font-weight: 900; transition: 0.2s; }
+        .bg-arrow:hover { color: var(--pk-red); transform: scale(1.2); }
+        .bg-label { font-size: 0.6rem; font-weight: 900; text-transform: uppercase; color: #aaa; }
+
+        .btn { border: none; padding: 12px 22px; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.75rem; color: white; }
+        .btn-std { background-color: var(--pk-blue); box-shadow: 0 4px 15px rgba(0, 162, 255, 0.3); }
+        .btn-asex { background-color: var(--pk-purple); box-shadow: 0 4px 15px rgba(165, 94, 234, 0.3); }
+        .btn:hover { transform: translateY(-3px); filter: brightness(1.2); }
+
+        .pk-card {
+            background: var(--pk-card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--pk-border);
+            border-radius: 18px;
+            padding: 22px 30px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            border-left: 7px solid var(--pk-blue);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .pk-card.is-asex { border-left-color: var(--pk-purple); }
+
+        .input-box { flex: 1; }
+        .input-box label { display: block; font-size: 10px; font-weight: 900; color: #aaa; margin-bottom: 10px; text-transform: uppercase; }
+        
+        input, select {
+            width: 100%;
+            padding: 11px 15px;
+            background: var(--pk-input-bg);
+            border: 1px solid var(--pk-border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-weight: 700;
+            color: white;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .services { display: flex; gap: 15px; }
+        .check-item { display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.8rem; cursor: pointer; }
+
+        .btn-del {
+            background: rgba(255, 60, 60, 0.1);
+            color: var(--pk-red);
+            border: 1px solid var(--pk-red);
+            width: 42px; height: 42px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar {
+            width: 420px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--pk-border);
+            position: relative;
+        }
+
+        .recap-item {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 12px;
+            border-right: 4px solid var(--pk-red);
+        }
+
+        .recap-item .price { float: right; color: var(--pk-green); font-weight: 900; font-size: 1rem; }
+        .recap-details { font-size: 0.75rem; color: #bbb; margin-top: 5px; line-height: 1.4; }
+        .badge-type { font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; font-weight: 900; margin-right: 5px; }
+        .badge-std { background: var(--pk-blue); color: white; }
+        .badge-asex { background: var(--pk-purple); color: white; }
+
+        .old-price { text-decoration: line-through; color: #ff3c3c; opacity: 0.7; margin-right: 5px; }
+        .new-price { color: var(--pk-green); font-weight: 900; }
+
+        .discount-section {
+            margin-top: 10px;
+            padding: 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            text-align: center;
+        }
+        .discount-title { font-size: 0.7rem; font-weight: 900; color: #888; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .discount-btns { display: flex; gap: 8px; justify-content: center; }
+        .btn-disc { 
+            flex: 1; padding: 8px; font-size: 0.65rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
+            background: transparent; color: white; cursor: pointer; font-weight: 800; transition: 0.2s;
+        }
+        .btn-disc.active { background: white; color: black; border-color: white; }
+
+        .footer-total {
+            background: var(--pk-card-bg);
+            border: 1px solid var(--pk-border);
+            color: var(--pk-text);
+            padding: 25px;
+            border-radius: 18px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .total-amount { font-size: 2.2rem; font-weight: 900; color: var(--pk-red); }
+    </style>
+</head>
+<body>
+
+<div class="pokeball-bg"></div>
+
+<div class="container">
+    <div class="header">
+        <h1>Astralya by Jrm</h1>
+        
+        <div class="bg-selector">
+            <span class="bg-label">Fond</span>
+            <button class="bg-arrow" onclick="changeBG(-1)">❮</button>
+            <button class="bg-arrow" onclick="changeBG(1)">❯</button>
+        </div>
+
+        <button class="btn btn-std" onclick="addRow(false)">+ Pokémon</button>
+        <button class="btn btn-asex" onclick="addRow(true)">+ Asexué</button>
+    </div>
+    <div id="pokes-list"></div>
+</div>
+
+<div class="sidebar">
+    <h2 style="text-align:center; color:var(--pk-red); text-transform:uppercase; font-size: 1.1rem; margin-bottom: 30px;">Détails de la commande</h2>
+    <div id="recap-list" style="flex:1; overflow-y:auto; padding-right: 10px;"></div>
+    
+    <div class="discount-section">
+        <span class="discount-title">Réductions (Prix du Pokémon uniquement)</span>
+        <div class="discount-btns">
+            <button class="btn-disc" id="disc-0" onclick="setDiscount(0, this)">Aucune</button>
+            <button class="btn-disc" id="disc-25" onclick="setDiscount(0.25, this)">Skyschool (-25%)</button>
+            <button class="btn-disc" id="disc-50" onclick="setDiscount(0.5, this)">Faction (-50%)</button>
+        </div>
+    </div>
+
+    <div class="footer-total">
+        <span style="font-weight:900; font-size:0.75rem; color:#888; display: block; margin-bottom: 5px;" id="total-label">TOTAL À RÉGLER</span>
+        <span class="total-amount" id="grand-total">0 $</span>
+    </div>
+</div>
+
+<script>
+    let idCounter = 0;
+    let currentDiscount = 0;
+
+    const backgrounds = ['test.png', 'nexios.png', 'goat.png'];
+    let currentBGIndex = 0;
+
+    function changeBG(direction) {
+        currentBGIndex += direction;
+        if (currentBGIndex < 0) currentBGIndex = backgrounds.length - 1;
+        if (currentBGIndex >= backgrounds.length) currentBGIndex = 0;
+        document.body.style.backgroundImage = `url('${backgrounds[currentBGIndex]}')`;
+    }
+
+    const PRICES = { 
+        std: 90000, 
+        stdDW: 120000, 
+        asex: 1000000, 
+        asexDW: 1200000, 
+        evs: 70000, 
+        moves: 20000,
+        xp: 50000 
+    };
+
+    function setDiscount(val, btn) {
+        currentDiscount = val;
+        document.querySelectorAll('.btn-disc').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        update();
+    }
+
+    function formatPrice(amount) {
+        if (amount >= 1000000) {
+            return (amount / 1000000).toFixed(2).replace('.00', '') + " M $";
+        } else {
+            return (amount / 1000).toLocaleString() + " k $";
+        }
+    }
+
+    function addRow(isAsex) {
+        idCounter++;
+        const id = idCounter;
+        const typeClass = isAsex ? 'is-asex' : '';
+        const html = `
+            <div class="pk-card ${typeClass}" id="row-${id}" data-asex="${isAsex}">
+                <div class="input-box">
+                    <label>Nom du Pokémon</label>
+                    <input type="text" placeholder="..." id="name-${id}" oninput="update()">
+                </div>
+                <div class="input-box">
+                    <label>Talent</label>
+                    <select id="talent-${id}" onchange="update()">
+                        <option value="normal">Sans DW</option>
+                        <option value="dw">DW</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label>Services</label>
+                    <div class="services">
+                        <label class="check-item"><input type="checkbox" id="ev-${id}" onchange="update()"> EVs</label>
+                        <label class="check-item"><input type="checkbox" id="atq-${id}" onchange="update()"> ATQ</label>
+                        <label class="check-item"><input type="checkbox" id="xp-${id}" onchange="update()"> XP</label>
+                    </div>
+                </div>
+                <button class="btn-del" onclick="removeRow(${id})">✕</button>
+            </div>
+        `;
+        document.getElementById('pokes-list').insertAdjacentHTML('beforeend', html);
+        update();
+    }
+
+    function removeRow(id) {
+        document.getElementById(`row-${id}`).remove();
+        update();
+    }
+
+    function update() {
+        const rows = document.querySelectorAll('.pk-card');
+        const recap = document.getElementById('recap-list');
+        let totalGeneral = 0;
+        recap.innerHTML = '';
+
+        rows.forEach(row => {
+            const id = row.id.split('-')[1];
+            const isAsex = row.getAttribute('data-asex') === 'true';
+            const name = document.getElementById(`name-${id}`).value || "Inconnu";
+            const isDW = document.getElementById(`talent-${id}`).value === 'dw';
+            const hasEv = document.getElementById(`ev-${id}`).checked;
+            const hasAtq = document.getElementById(`atq-${id}`).checked;
+            const hasXp = document.getElementById(`xp-${id}`).checked;
+
+            let basePrice = isAsex ? (isDW ? PRICES.asexDW : PRICES.asex) : (isDW ? PRICES.stdDW : PRICES.std);
+            let discountedBase = basePrice * (1 - currentDiscount);
+            let baseDisplay = currentDiscount > 0 ? `<span class="old-price">${basePrice.toLocaleString()} $</span> <span class="new-price">${discountedBase.toLocaleString()} $</span>` : `<span>${basePrice.toLocaleString()} $</span>`;
+
+            let servicesHtml = '';
+            let servicesPrice = 0;
+            if(hasEv) { servicesPrice += PRICES.evs; servicesHtml += `+ EVs (${PRICES.evs.toLocaleString()} $)<br>`; }
+            if(hasAtq) { servicesPrice += PRICES.moves; servicesHtml += `+ ATQ (${PRICES.moves.toLocaleString()} $)<br>`; }
+            if(hasXp) { servicesPrice += PRICES.xp; servicesHtml += `+ XP (${PRICES.xp.toLocaleString()} $)<br>`; }
+
+            let rowTotal = discountedBase + servicesPrice;
+            totalGeneral += rowTotal;
+
+            recap.innerHTML += `
+                <div class="recap-item">
+                    <span class="price">${rowTotal.toLocaleString()} $</span>
+                    <span class="badge-type ${isAsex ? 'badge-asex' : 'badge-std'}">${isAsex ? 'Asexué' : 'Normal'}</span>
+                    <b style="color:${isAsex ? 'var(--pk-purple)' : 'var(--pk-blue)'}">${name}</b><br>
+                    <div class="recap-details">Base ${isDW ? '(DW)' : ''} : ${baseDisplay}<br>${servicesHtml}</div>
+                </div>
+            `;
+        });
+        document.getElementById('grand-total').innerText = formatPrice(totalGeneral);
+    }
+
+    addRow(false);
+    document.getElementById('disc-0').classList.add('active');
+</script>
+</body>
+</html>
