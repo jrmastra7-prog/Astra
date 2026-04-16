@@ -48,57 +48,49 @@
             padding-bottom: 15px;
         }
 
-        h1 { margin: 0; font-weight: 900; text-transform: uppercase; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+        h1 { margin: 0; font-weight: 900; text-transform: uppercase; font-size: 1.5rem; display: flex; align-items: center; gap: 15px; }
+        
+        .pk-ball { 
+            width: 30px; height: 30px; 
+            background: linear-gradient(to bottom, var(--pk-red) 50%, white 50%);
+            border-radius: 50%;
+            border: 2px solid black;
+            position: relative;
+            display: inline-block;
+        }
+        .pk-ball::after {
+            content: "";
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px; height: 8px;
+            background: white;
+            border: 2px solid black;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        .pk-ball::before {
+            content: "";
+            position: absolute;
+            top: 50%; left: 0;
+            width: 100%; height: 2px;
+            background: black;
+            transform: translateY(-50%);
+        }
 
-        /* Styles de la Modale d'Import */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(5px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 200;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(10px);
+            display: none; justify-content: center; align-items: center; z-index: 200;
         }
-        .modal-content {
-            background: #1a1a1a;
-            width: 500px;
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid var(--pk-blue);
-            box-shadow: 0 0 30px rgba(0, 162, 255, 0.2);
-        }
-        .modal-content h3 { margin-top: 0; text-transform: uppercase; font-size: 0.9rem; color: var(--pk-blue); }
-        .modal-content textarea {
-            width: 100%;
-            height: 200px;
-            background: #000;
-            border: 1px solid var(--pk-border);
-            border-radius: 10px;
-            color: white;
-            padding: 15px;
-            font-family: inherit;
-            resize: none;
-            margin: 15px 0;
-            box-sizing: border-box;
-        }
+        .modal-content { background: #1a1a1a; width: 600px; padding: 30px; border-radius: 20px; border: 1px solid var(--pk-blue); }
+        .modal-content textarea { width: 100%; height: 250px; background: #000; border: 1px solid var(--pk-border); border-radius: 10px; color: white; padding: 15px; font-family: inherit; resize: none; margin: 15px 0; box-sizing: border-box; }
 
         .floating-bar {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateX(-225px);
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 10px 25px;
-            border-radius: 50px;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            border: 1px solid var(--pk-border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            z-index: 100;
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateX(-225px);
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
+            padding: 10px 25px; border-radius: 50px; display: flex; gap: 15px;
+            align-items: center; border: 1px solid var(--pk-border); box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 100;
         }
 
         .btn { border: none; padding: 10px 18px; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.7rem; color: white; }
@@ -108,16 +100,8 @@
         .btn-reset { background-color: #444; }
 
         .pk-card {
-            background: var(--pk-card-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--pk-border);
-            border-radius: 18px;
-            padding: 22px 30px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            border-left: 7px solid var(--pk-blue);
+            background: var(--pk-card-bg); backdrop-filter: blur(12px); border: 1px solid var(--pk-border);
+            border-radius: 18px; padding: 22px 30px; margin-bottom: 20px; display: flex; align-items: center; gap: 20px; border-left: 7px solid var(--pk-blue);
         }
         .pk-card.is-asex { border-left-color: var(--pk-purple); }
 
@@ -131,17 +115,7 @@
 
         .btn-del { background: rgba(255, 60, 60, 0.1); color: var(--pk-red); border: 1px solid var(--pk-red); width: 42px; height: 42px; border-radius: 12px; cursor: pointer; font-weight: 900; }
 
-        .sidebar {
-            width: 450px;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            border-left: 1px solid var(--pk-border);
-            z-index: 101;
-        }
-
+        .sidebar { width: 450px; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); padding: 30px; display: flex; flex-direction: column; border-left: 1px solid var(--pk-border); z-index: 101; }
         .sidebar-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--pk-border); }
 
         .recap-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
@@ -149,8 +123,14 @@
 
         .recap-list-container { flex:1; overflow-y:auto; padding-right: 10px; }
         .recap-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; margin-bottom: 12px; border-right: 4px solid var(--pk-red); }
-        .recap-item .price { float: right; color: var(--pk-green); font-weight: 900; }
-        .recap-details { font-size: 0.75rem; color: #bbb; margin-top: 5px; line-height: 1.4; }
+        
+        .recap-item .price-final { float: right; color: var(--pk-green); font-weight: 900; font-size: 1.1rem; }
+        .recap-item .price-old { float: right; color: #ff3c3c; text-decoration: line-through; font-size: 0.8rem; margin-right: 10px; margin-top: 3px; opacity: 0.7; }
+        
+        .recap-subtext { font-size: 0.75rem; color: #888; margin-top: 5px; line-height: 1.3; }
+        .badge-mini { font-size: 0.6rem; padding: 2px 5px; border-radius: 4px; text-transform: uppercase; font-weight: 900; margin-right: 5px; color: white; }
+        .badge-std { background: var(--pk-blue); }
+        .badge-asex { background: var(--pk-purple); }
 
         .discount-section { margin-top: 10px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 15px; text-align: center; }
         .btn-disc { flex: 1; padding: 8px; font-size: 0.65rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: white; cursor: pointer; font-weight: 800; }
@@ -165,29 +145,36 @@
 
 <div class="modal-overlay" id="importModal">
     <div class="modal-content">
-        <h3>📥 Importer une liste</h3>
-        <p style="font-size: 0.7rem; color: #888;">Colle ta liste (Regroupement automatique activé) :</p>
-        <textarea id="import-area" placeholder="Exemple :&#10;Nom du pokémon: Kangourex&#10;Talent(s): Querelleur&#10;Nature(s): Jovial..."></textarea>
+        <h3> Importer </h3>
+        <div style="margin-bottom: 15px;">
+            <label style="font-size: 0.7rem; font-weight: 900; color: var(--pk-green);">NOM DU BREEDER (EX: JRM) :</label>
+            <input type="text" id="filter-breeder" placeholder="Filtrer par nom..." style="border: 1px solid var(--pk-green);">
+        </div>
+        <textarea id="import-area" placeholder="Colle ta liste mélangée ici..."></textarea>
         <div style="display: flex; gap: 10px;">
-            <button class="btn btn-import-trigger" style="flex: 2;" onclick="processImport()">⚡ Lancer l'import</button>
-            <button class="btn" style="flex: 1; background: #333;" onclick="closeModal()">Annuler</button>
+            <button class="btn btn-import-trigger" style="flex: 2;" onclick="processImport()">⚡ Analyser & Cocher</button>
+            <button class="btn" style="flex: 1; background: #333;" onclick="closeModal()">Fermer</button>
         </div>
     </div>
 </div>
 
 <div class="container">
-    <div class="header"><h1>Astralya by Jrm</h1></div>
+    <div class="header">
+        <h1><div class="pk-ball"></div> Astralya by Jrm</h1>
+    </div>
+
     <div id="pokes-list"></div>
+
     <div class="floating-bar">
-        <button class="btn btn-std" onclick="addRow(false)">+ Pokémon</button>
-        <button class="btn btn-asex" onclick="addRow(true)">+ Asexué</button>
+        <button class="btn btn-std" onclick="addRow(false)">➕ Pokémon</button>
+        <button class="btn btn-asex" onclick="addRow(true)">🟣 Asexué</button>
         <button class="btn btn-import-trigger" onclick="openModal()">📥 Importer</button>
-        <button class="btn btn-reset" onclick="resetApp()">Vider tout</button>
+        <button class="btn btn-reset" onclick="resetApp()">🗑️ Vider</button>
     </div>
 </div>
 
 <div class="sidebar">
-    <h2 style="text-align:center; color:var(--pk-red); text-transform:uppercase; font-size: 1.1rem; margin-bottom: 20px;">Détails de la commande</h2>
+    <h2 style="text-align:center; color:var(--pk-red); text-transform:uppercase; font-size: 1.1rem; margin-bottom: 20px;">Commande</h2>
     <div class="sidebar-inputs">
         <div class="input-box"><label>Client</label><input type="text" id="client-name" placeholder="Client" oninput="update()"></div>
         <div class="input-box"><label>Breeder</label><input type="text" id="breeder-name" placeholder="Breeder" oninput="update()"></div>
@@ -206,7 +193,7 @@
     </div>
     <div class="footer-total">
         <span class="total-amount" id="grand-total">0 $</span>
-        <button class="btn-copy" onclick="copyTicket()">📋 Copier le ticket</button>
+        <button class="btn-copy" onclick="copyTicket()">Copier Ticket </button>
     </div>
 </div>
 
@@ -220,8 +207,7 @@
     function closeModal() { document.getElementById('importModal').style.display = 'none'; }
 
     function setDiscount(val, name, btn) {
-        currentDiscount = val;
-        currentDiscountName = name;
+        currentDiscount = val; currentDiscountName = name;
         document.querySelectorAll('.btn-disc').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         update();
@@ -234,15 +220,15 @@
             <div class="pk-card ${isAsex ? 'is-asex' : ''}" id="row-${id}" data-asex="${isAsex}">
                 <div class="input-box" style="width:70px"><label>Qté</label><input type="number" value="${data?.qty || 1}" min="1" id="qty-${id}" oninput="update()"></div>
                 <div class="input-box" style="flex:1.5"><label>Nom</label><input type="text" value="${data?.name || ''}" id="name-${id}" oninput="update()"></div>
-                <div class="input-box" style="flex:1"><label>Nature</label><input type="text" value="${data?.nature || ''}" id="nature-${id}" oninput="update()"></div>
+                <div class="input-box" style="flex:1.5"><label>Nature(s)</label><input type="text" value="${data?.nature || ''}" id="nature-${id}" oninput="update()"></div>
                 <div class="input-box" style="flex:1.2"><label>Talent</label><select id="talent-${id}" onchange="update()">
                     <option value="normal" ${data?.dw ? '' : 'selected'}>Normal</option>
                     <option value="dw" ${data?.dw ? 'selected' : ''}>DW / TC</option>
                 </select></div>
                 <div class="input-box" style="flex:2"><label>Services</label><div class="services-group">
-                    <label class="check-item"><input type="checkbox" id="ev-${id}" onchange="update()"><span>EVS</span></label>
-                    <label class="check-item"><input type="checkbox" id="atq-${id}" onchange="update()"><span>ATQ</span></label>
-                    <label class="check-item"><input type="checkbox" id="xp-${id}" onchange="update()"><span>XP</span></label>
+                    <label class="check-item"><input type="checkbox" id="ev-${id}" ${data?.evs ? 'checked' : ''} onchange="update()"><span>EVS</span></label>
+                    <label class="check-item"><input type="checkbox" id="atq-${id}" ${data?.atq ? 'checked' : ''} onchange="update()"><span>ATQ</span></label>
+                    <label class="check-item"><input type="checkbox" id="xp-${id}" ${data?.xp ? 'checked' : ''} onchange="update()"><span>XP</span></label>
                 </div></div>
                 <button class="btn-del" onclick="document.getElementById('row-${id}').remove(); update();">✕</button>
             </div>`;
@@ -252,41 +238,39 @@
 
     function processImport() {
         const text = document.getElementById('import-area').value;
-        const lines = text.split('\n');
-        let importedList = [];
-        let currentPoke = null;
+        const myName = document.getElementById('filter-breeder').value.trim().toLowerCase();
+        const blocks = text.split(/\n\s*\n/);
 
-        lines.forEach(line => {
-            const clean = line.trim();
-            if (clean.toLowerCase().startsWith('nom du pokémon:')) {
-                if (currentPoke) importedList.push(currentPoke);
-                currentPoke = { name: clean.split(':')[1].trim(), nature: '', dw: false, qty: 1 };
-            } else if (clean.toLowerCase().startsWith('talent(s):')) {
-                if (currentPoke && (clean.toLowerCase().includes('(tc)') || clean.toLowerCase().includes('dw'))) currentPoke.dw = true;
-            } else if (clean.toLowerCase().startsWith('nature(s):')) {
-                if (currentPoke) currentPoke.nature = clean.split(':')[1].trim();
+        blocks.forEach(block => {
+            const lines = block.split('\n').map(l => l.trim()).filter(l => l !== "");
+            if (lines.length < 2) return;
+            let name = lines[0];
+            let rawNatures = "", rawTalents = "", breeder = lines[lines.length - 1];
+            
+            const lowerBlock = block.toLowerCase();
+            const hasEV = lowerBlock.includes("ev");
+            const hasXP = lowerBlock.includes("xp");
+            const hasATQ = lowerBlock.includes("atq") || lowerBlock.includes("attaque");
+
+            lines.forEach(l => {
+                if (l.toLowerCase().includes("nature")) rawNatures = l.replace(/nature\(s\)|nature/gi, "").replace(/[:]/g, "").trim();
+                if (l.toLowerCase().includes("talent")) rawTalents = l.replace(/talent\(s\)|talent/gi, "").replace(/[:]/g, "").trim();
+            });
+
+            if (myName !== "" && breeder.toLowerCase() !== myName) return;
+
+            let natureList = rawNatures.split(/[/,]| et /).map(n => n.trim()).filter(n => n !== "");
+            let talentList = rawTalents.split(/[/,]| et /).map(t => t.trim()).filter(t => t !== "");
+            let normals = talentList.filter(t => !t.toLowerCase().includes("(tc)") && !t.toLowerCase().includes("dw"));
+            let tcs = talentList.filter(t => t.toLowerCase().includes("(tc)") || t.toLowerCase().includes("dw"));
+
+            if (normals.length > 0) {
+                addRow(false, { name: name, nature: natureList.join(" / "), dw: false, qty: natureList.length * (normals.length || 1), evs: hasEV, xp: hasXP, atq: hasATQ });
             }
+            tcs.forEach(tc => {
+                addRow(false, { name: name, nature: natureList.join(" / "), dw: true, qty: natureList.length, evs: hasEV, xp: hasXP, atq: hasATQ });
+            });
         });
-        if (currentPoke) importedList.push(currentPoke);
-
-        // --- ALGORITHME DE REGROUPEMENT ---
-        let grouped = [];
-        importedList.forEach(item => {
-            // On cherche si un Pokémon identique existe déjà
-            let match = grouped.find(g => 
-                g.name.toLowerCase() === item.name.toLowerCase() && 
-                g.nature.toLowerCase() === item.nature.toLowerCase() && 
-                g.dw === item.dw
-            );
-            if (match) {
-                match.qty += 1; // Si trouvé, on augmente la quantité
-            } else {
-                grouped.push(item); // Sinon on ajoute un nouveau bloc
-            }
-        });
-
-        grouped.forEach(poke => addRow(false, poke));
-        document.getElementById('import-area').value = '';
         closeModal();
     }
 
@@ -298,23 +282,38 @@
 
         rows.forEach(row => {
             const id = row.id.split('-')[1];
-            const qty = parseInt(document.getElementById(`qty-${id}`).value) || 1;
+            const qtyInput = document.getElementById(`qty-${id}`);
+            const nameInput = document.getElementById(`name-${id}`);
+            const natureInput = document.getElementById(`nature-${id}`);
+            if (!qtyInput || !nameInput) return;
+
+            const qty = parseInt(qtyInput.value) || 1;
             totalQty += qty;
             const isAsex = row.getAttribute('data-asex') === 'true';
-            const name = document.getElementById(`name-${id}`).value || "Inconnu";
-            const nature = document.getElementById(`nature-${id}`).value;
             const isDW = document.getElementById(`talent-${id}`).value === 'dw';
             
             let base = isAsex ? (isDW ? PRICES.asexDW : PRICES.asex) : (isDW ? PRICES.stdDW : PRICES.std);
-            let dBase = base * (1 - currentDiscount);
-            let srv = (document.getElementById(`ev-${id}`).checked ? PRICES.evs : 0) + (document.getElementById(`atq-${id}`).checked ? PRICES.moves : 0) + (document.getElementById(`xp-${id}`).checked ? PRICES.xp : 0);
+            
+            let srvList = [];
+            let srvTotal = 0;
+            if(document.getElementById(`ev-${id}`).checked) { srvTotal += PRICES.evs; srvList.push(`EV (${PRICES.evs.toLocaleString()} $)`); }
+            if(document.getElementById(`atq-${id}`).checked) { srvTotal += PRICES.moves; srvList.push(`ATQ (${PRICES.moves.toLocaleString()} $)`); }
+            if(document.getElementById(`xp-${id}`).checked) { srvTotal += PRICES.xp; srvList.push(`XP (${PRICES.xp.toLocaleString()} $)`); }
 
-            totalFinal += (dBase + srv) * qty;
+            let priceOld = (base + srvTotal) * qty;
+            let priceFinal = ((base * (1 - currentDiscount)) + srvTotal) * qty;
+            totalFinal += priceFinal;
+
             recap.innerHTML += `
                 <div class="recap-item">
-                    <span class="price">${((dBase + srv) * qty).toLocaleString()} $</span>
-                    <b style="color:${isAsex ? 'var(--pk-purple)' : 'var(--pk-blue)'}">${qty}x ${name}</b><br>
-                    <div class="recap-details">${nature ? 'Nature : '+nature+'<br>' : ''}Talent : ${isDW ? 'DW / TC' : 'Normal'}</div>
+                    <span class="price-final">${priceFinal.toLocaleString()} $</span>
+                    ${currentDiscount > 0 ? `<span class="price-old">${priceOld.toLocaleString()} $</span>` : ''}
+                    <span class="badge-mini ${isAsex ? 'badge-asex' : 'badge-std'}">${isAsex ? 'Asexué' : 'Normal'}</span>
+                    <b>${qty}x ${nameInput.value || 'Pokémon'}</b>
+                    <div class="recap-subtext">
+                        ${natureInput.value || 'Nature'}${isDW ? ' | DW' : ''}
+                        ${srvList.length > 0 ? '<br><span style="color:var(--pk-green)">+ ' + srvList.join(' + ') + '</span>' : ''}
+                    </div>
                 </div>`;
         });
         document.getElementById('grand-total').innerText = totalFinal.toLocaleString() + " $";
@@ -324,30 +323,48 @@
     function copyTicket() {
         const client = document.getElementById('client-name').value || "Non spécifié";
         const breeder = document.getElementById('breeder-name').value || "Non spécifié";
-        let text = `═══ 🏷️ TICKET ASTRALYA ═══\n👤 CLIENT : ${client}\n🛠️ BREEDER : ${breeder}\n📉 RÉDUC : ${currentDiscountName}\n\n`;
-        let tFinal = 0, totalPokes = 0;
+        let tBrut = 0, tFinal = 0, totalPokes = 0;
+        let text = `═══ 🔘 TICKET ASTRALYA ═══\n👤 CLIENT : ${client}\n🛠️ BREEDER : ${breeder}\n📉 RÉDUCTION : ${currentDiscountName}\n\n`;
         
         document.querySelectorAll('.pk-card').forEach(row => {
             const id = row.id.split('-')[1];
             const qty = parseInt(document.getElementById(`qty-${id}`).value) || 1;
             totalPokes += qty;
-            const name = (document.getElementById(`name-${id}`).value || "Pokémon").toUpperCase();
-            const nature = document.getElementById(`nature-${id}`).value;
             const isAsex = row.getAttribute('data-asex') === 'true';
+            const name = document.getElementById(`name-${id}`).value.toUpperCase();
             const isDW = document.getElementById(`talent-${id}`).value === 'dw';
             
-            let base = (isAsex ? (isDW ? PRICES.asexDW : PRICES.asex) : (isDW ? PRICES.stdDW : PRICES.std)) * (1 - currentDiscount);
-            let srvTotal = (document.getElementById(`ev-${id}`).checked ? PRICES.evs : 0) + (document.getElementById(`atq-${id}`).checked ? PRICES.moves : 0) + (document.getElementById(`xp-${id}`).checked ? PRICES.xp : 0);
+            let base = isAsex ? (isDW ? PRICES.asexDW : PRICES.asex) : (isDW ? PRICES.stdDW : PRICES.std);
+            let srvLog = [], srvTotal = 0;
+            if(document.getElementById(`ev-${id}`).checked) { srvLog.push(`EV (${PRICES.evs.toLocaleString()} $)`); srvTotal += PRICES.evs; }
+            if(document.getElementById(`atq-${id}`).checked) { srvLog.push(`ATQ (${PRICES.moves.toLocaleString()} $)`); srvTotal += PRICES.moves; }
+            if(document.getElementById(`xp-${id}`).checked) { srvLog.push(`XP (${PRICES.xp.toLocaleString()} $)`); srvTotal += PRICES.xp; }
+
+            let baseReduite = base * (1 - currentDiscount);
+            let unitSansReduc = base + srvTotal;
+            let unitAvecReduc = baseReduite + srvTotal;
             
-            tFinal += (base + srvTotal) * qty;
-            text += `• ${qty}x ${name}\n${nature ? '  └─ Nature : '+nature+'\n' : ''}  └─ Talent : ${isDW?'DW / TC':'Normal'}\n  > Sous-total : ${((base + srvTotal)*qty).toLocaleString()} $\n\n`;
+            tBrut += unitSansReduc * qty;
+            tFinal += unitAvecReduc * qty;
+
+            text += `• ${qty}x ${name} (${isAsex ? 'Asexué' : 'Normal'})\n`;
+            text += `  └─ Nature(s) : ${document.getElementById(`nature-${id}`).value}\n`;
+            text += `  └─ Prix Poke : ${base.toLocaleString()} $ ${currentDiscount > 0 ? '➔ '+baseReduite.toLocaleString()+' $' : ''}\n`;
+            srvLog.forEach(s => { text += `  └─ Service : + ${s}\n`; });
+            text += `  > Sous-total : ${(unitAvecReduc * qty).toLocaleString()} $\n\n`;
         });
-        text += `------------------------------\n📦 TOTAL POKES : ${totalPokes}\n💰 PRIX FINAL : ${tFinal.toLocaleString()} $\n══════════════════════════════`;
+
+        text += `------------------------------\n`;
+        text += `📦 TOTAL POKÉMON : ${totalPokes}\n`;
+        text += `PRIX BRUT : ${tBrut.toLocaleString()} $\n`;
+        text += `💰 PRIX FINAL : ${tFinal.toLocaleString()} $\n`;
+        text += `══════════════════════════`;
+
         navigator.clipboard.writeText(text);
-        alert("Ticket copié !");
+        alert("Ticket détaillé copié !");
     }
 
-    function resetApp() { if(confirm("Vider tout ?")) { document.getElementById('pokes-list').innerHTML = ""; update(); } }
+    function resetApp() { if(confirm("Vider ?")) { document.getElementById('pokes-list').innerHTML = ""; update(); } }
     addRow(false);
 </script>
 </body>
