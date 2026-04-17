@@ -11,6 +11,7 @@
             --pk-blue: #00a2ff;
             --pk-purple: #a55eea;
             --pk-green: #2ed573;
+            --pk-orange: #ff9f43;
             --pk-dark-bg: #121212;
             --pk-card-bg: rgba(20, 20, 20, 0.85);
             --pk-text: #ffffff;
@@ -83,32 +84,34 @@
             background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(10px);
             display: none; justify-content: center; align-items: center; z-index: 200;
         }
-        .modal-content { background: #1a1a1a; width: 600px; padding: 30px; border-radius: 20px; border: 1px solid var(--pk-blue); }
-        .modal-content textarea { width: 100%; height: 250px; background: #000; border: 1px solid var(--pk-border); border-radius: 10px; color: white; padding: 15px; font-family: inherit; resize: none; margin: 15px 0; box-sizing: border-box; }
+        .modal-content { background: #1a1a1a; width: 500px; padding: 30px; border-radius: 20px; border: 1px solid var(--pk-blue); }
+        .modal-content textarea { width: 100%; height: 200px; background: #000; border: 1px solid var(--pk-border); border-radius: 10px; color: white; padding: 15px; font-family: inherit; resize: none; margin: 15px 0; box-sizing: border-box; }
 
         .floating-bar {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateX(-225px);
             background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
-            padding: 10px 25px; border-radius: 50px; display: flex; gap: 15px;
+            padding: 10px 25px; border-radius: 50px; display: flex; gap: 10px;
             align-items: center; border: 1px solid var(--pk-border); box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 100;
         }
 
         .btn { border: none; padding: 10px 18px; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.7rem; color: white; }
         .btn-std { background-color: var(--pk-blue); }
         .btn-asex { background-color: var(--pk-purple); }
+        .btn-pkdx { background-color: var(--pk-orange); }
         .btn-import-trigger { background-color: var(--pk-green); color: black; }
         .btn-reset { background-color: #444; }
 
         .pk-card {
             background: var(--pk-card-bg); backdrop-filter: blur(12px); border: 1px solid var(--pk-border);
-            border-radius: 18px; padding: 22px 30px; margin-bottom: 20px; display: flex; align-items: center; gap: 20px; border-left: 7px solid var(--pk-blue);
+            border-radius: 18 : 18px; padding: 22px 30px; margin-bottom: 20px; display: flex; align-items: center; gap: 20px; border-left: 7px solid var(--pk-blue);
         }
         .pk-card.is-asex { border-left-color: var(--pk-purple); }
+        .pk-card.is-pkdx { border-left-color: var(--pk-orange); }
 
         .input-box label { display: block; font-size: 10px; font-weight: 900; color: #aaa; margin-bottom: 8px; text-transform: uppercase; }
         input, select { width: 100%; padding: 10px 14px; background: var(--pk-input-bg); border: 1px solid var(--pk-border); border-radius: 10px; font-weight: 700; color: white; outline: none; box-sizing: border-box; }
 
-        .services-group { display: flex; gap: 15px; align-items: center; height: 44px; }
+        .services-group { display: flex; gap: 12px; align-items: center; height: 44px; }
         .check-item { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
         .check-item input { width: 18px; height: 18px; margin: 0; cursor: pointer; }
         .check-item span { font-size: 10px; font-weight: 900; color: #fff; }
@@ -131,6 +134,7 @@
         .badge-mini { font-size: 0.6rem; padding: 2px 5px; border-radius: 4px; text-transform: uppercase; font-weight: 900; margin-right: 5px; color: white; }
         .badge-std { background: var(--pk-blue); }
         .badge-asex { background: var(--pk-purple); }
+        .badge-pkdx { background: var(--pk-orange); }
 
         .discount-section { margin-top: 10px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 15px; text-align: center; }
         .btn-disc { flex: 1; padding: 8px; font-size: 0.65rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: white; cursor: pointer; font-weight: 800; }
@@ -143,9 +147,24 @@
 </head>
 <body>
 
+<div class="modal-overlay" id="pkdxModal">
+    <div class="modal-content">
+        <h3 style="color: var(--pk-orange);">📖 Service Pokédex</h3>
+        <p style="font-size: 0.8rem; color: #aaa;">Entrez le nombre de Pokémon à ajouter au Pokédex (5 000 $/unité)</p>
+        <div class="input-box">
+            <label>Quantité de Pokémon</label>
+            <input type="number" id="pkdx-qty-input" value="1" min="1">
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button class="btn btn-pkdx" style="flex: 2;" onclick="confirmPkdx()">Ajouter à la commande</button>
+            <button class="btn" style="flex: 1; background: #333;" onclick="closePkdx()">Annuler</button>
+        </div>
+    </div>
+</div>
+
 <div class="modal-overlay" id="importModal">
     <div class="modal-content">
-        <h3> Importer </h3>
+        <h3>🚀 Importateur Expert</h3>
         <div style="margin-bottom: 15px;">
             <label style="font-size: 0.7rem; font-weight: 900; color: var(--pk-green);">NOM DU BREEDER (EX: JRM) :</label>
             <input type="text" id="filter-breeder" placeholder="Filtrer par nom..." style="border: 1px solid var(--pk-green);">
@@ -168,6 +187,7 @@
     <div class="floating-bar">
         <button class="btn btn-std" onclick="addRow(false)">➕ Pokémon</button>
         <button class="btn btn-asex" onclick="addRow(true)">➕ Asexué</button>
+        <button class="btn btn-pkdx" onclick="openPkdx()">📖 Service Pokedex</button>
         <button class="btn btn-import-trigger" onclick="openModal()">📥 Importer</button>
         <button class="btn btn-reset" onclick="resetApp()">🗑️ Vider</button>
     </div>
@@ -193,7 +213,7 @@
     </div>
     <div class="footer-total">
         <span class="total-amount" id="grand-total">0 $</span>
-        <button class="btn-copy" onclick="copyTicket()">Copier Ticket </button>
+        <button class="btn-copy" onclick="copyTicket()">Copier le Ticket </button>
     </div>
 </div>
 
@@ -201,10 +221,19 @@
     let idCounter = 0;
     let currentDiscount = 0;
     let currentDiscountName = "Aucune";
-    const PRICES = { std: 90000, stdDW: 120000, asex: 1000000, asexDW: 1200000, evs: 70000, moves: 20000, xp: 50000 };
+    const PRICES = { std: 90000, stdDW: 120000, asex: 1000000, asexDW: 1200000, evs: 70000, moves: 20000, xp: 50000, pkdx: 5000 };
 
     function openModal() { document.getElementById('importModal').style.display = 'flex'; }
     function closeModal() { document.getElementById('importModal').style.display = 'none'; }
+    
+    function openPkdx() { document.getElementById('pkdxModal').style.display = 'flex'; }
+    function closePkdx() { document.getElementById('pkdxModal').style.display = 'none'; }
+    
+    function confirmPkdx() {
+        const qty = parseInt(document.getElementById('pkdx-qty-input').value) || 1;
+        addRow(false, { name: "SERVICE POKÉDEX", qty: qty, isPkdxOnly: true });
+        closePkdx();
+    }
 
     function setDiscount(val, name, btn) {
         currentDiscount = val; currentDiscountName = name;
@@ -216,8 +245,20 @@
     function addRow(isAsex, data = null) {
         idCounter++;
         const id = idCounter;
-        const html = `
-            <div class="pk-card ${isAsex ? 'is-asex' : ''}" id="row-${id}" data-asex="${isAsex}">
+        const isPkdxOnly = data?.isPkdxOnly || false;
+        
+        let html = "";
+        if (isPkdxOnly) {
+            html = `
+            <div class="pk-card is-pkdx" id="row-${id}" data-type="pkdx">
+                <div class="input-box" style="width:70px"><label>Qté</label><input type="number" value="${data.qty}" min="1" id="qty-${id}" oninput="update()"></div>
+                <div class="input-box" style="flex:1"><label>Service</label><input type="text" value="Service Pokedex" id="name-${id}" readonly></div>
+                <div style="flex:2; font-weight:900; color:var(--pk-orange); font-size: 0.8rem;">SERVICE  POKÉDEX (5 000 $ unité)</div>
+                <button class="btn-del" onclick="document.getElementById('row-${id}').remove(); update();">✕</button>
+            </div>`;
+        } else {
+            html = `
+            <div class="pk-card ${isAsex ? 'is-asex' : ''}" id="row-${id}" data-type="${isAsex ? 'asex' : 'std'}">
                 <div class="input-box" style="width:70px"><label>Qté</label><input type="number" value="${data?.qty || 1}" min="1" id="qty-${id}" oninput="update()"></div>
                 <div class="input-box" style="flex:1.5"><label>Nom</label><input type="text" value="${data?.name || ''}" id="name-${id}" oninput="update()"></div>
                 <div class="input-box" style="flex:1.5"><label>Nature(s)</label><input type="text" value="${data?.nature || ''}" id="nature-${id}" oninput="update()"></div>
@@ -232,46 +273,9 @@
                 </div></div>
                 <button class="btn-del" onclick="document.getElementById('row-${id}').remove(); update();">✕</button>
             </div>`;
+        }
         document.getElementById('pokes-list').insertAdjacentHTML('beforeend', html);
         update();
-    }
-
-    function processImport() {
-        const text = document.getElementById('import-area').value;
-        const myName = document.getElementById('filter-breeder').value.trim().toLowerCase();
-        const blocks = text.split(/\n\s*\n/);
-
-        blocks.forEach(block => {
-            const lines = block.split('\n').map(l => l.trim()).filter(l => l !== "");
-            if (lines.length < 2) return;
-            let name = lines[0];
-            let rawNatures = "", rawTalents = "", breeder = lines[lines.length - 1];
-            
-            const lowerBlock = block.toLowerCase();
-            const hasEV = lowerBlock.includes("ev");
-            const hasXP = lowerBlock.includes("xp");
-            const hasATQ = lowerBlock.includes("atq") || lowerBlock.includes("attaque");
-
-            lines.forEach(l => {
-                if (l.toLowerCase().includes("nature")) rawNatures = l.replace(/nature\(s\)|nature/gi, "").replace(/[:]/g, "").trim();
-                if (l.toLowerCase().includes("talent")) rawTalents = l.replace(/talent\(s\)|talent/gi, "").replace(/[:]/g, "").trim();
-            });
-
-            if (myName !== "" && breeder.toLowerCase() !== myName) return;
-
-            let natureList = rawNatures.split(/[/,]| et /).map(n => n.trim()).filter(n => n !== "");
-            let talentList = rawTalents.split(/[/,]| et /).map(t => t.trim()).filter(t => t !== "");
-            let normals = talentList.filter(t => !t.toLowerCase().includes("(tc)") && !t.toLowerCase().includes("dw"));
-            let tcs = talentList.filter(t => t.toLowerCase().includes("(tc)") || t.toLowerCase().includes("dw"));
-
-            if (normals.length > 0) {
-                addRow(false, { name: name, nature: natureList.join(" / "), dw: false, qty: natureList.length * (normals.length || 1), evs: hasEV, xp: hasXP, atq: hasATQ });
-            }
-            tcs.forEach(tc => {
-                addRow(false, { name: name, nature: natureList.join(" / "), dw: true, qty: natureList.length, evs: hasEV, xp: hasXP, atq: hasATQ });
-            });
-        });
-        closeModal();
     }
 
     function update() {
@@ -282,39 +286,47 @@
 
         rows.forEach(row => {
             const id = row.id.split('-')[1];
-            const qtyInput = document.getElementById(`qty-${id}`);
-            const nameInput = document.getElementById(`name-${id}`);
-            const natureInput = document.getElementById(`nature-${id}`);
-            if (!qtyInput || !nameInput) return;
+            const type = row.getAttribute('data-type');
+            const qty = parseInt(document.getElementById(`qty-${id}`).value) || 1;
+            const name = document.getElementById(`name-${id}`).value || 'Pokémon';
 
-            const qty = parseInt(qtyInput.value) || 1;
-            totalQty += qty;
-            const isAsex = row.getAttribute('data-asex') === 'true';
-            const isDW = document.getElementById(`talent-${id}`).value === 'dw';
-            
-            let base = isAsex ? (isDW ? PRICES.asexDW : PRICES.asex) : (isDW ? PRICES.stdDW : PRICES.std);
-            
-            let srvList = [];
-            let srvTotal = 0;
-            if(document.getElementById(`ev-${id}`).checked) { srvTotal += PRICES.evs; srvList.push(`EV (${PRICES.evs.toLocaleString()} $)`); }
-            if(document.getElementById(`atq-${id}`).checked) { srvTotal += PRICES.moves; srvList.push(`ATQ (${PRICES.moves.toLocaleString()} $)`); }
-            if(document.getElementById(`xp-${id}`).checked) { srvTotal += PRICES.xp; srvList.push(`XP (${PRICES.xp.toLocaleString()} $)`); }
+            if (type === 'pkdx') {
+                const price = qty * PRICES.pkdx;
+                totalFinal += price;
+                recap.innerHTML += `
+                    <div class="recap-item" style="border-right-color: var(--pk-orange);">
+                        <span class="price-final">${price.toLocaleString()} $</span>
+                        <span class="badge-mini badge-pkdx">Pokédex</span>
+                        <b>${qty}x ${name}</b>
+                        <div class="recap-subtext">Forfait : * ${PRICES.pkdx.toLocaleString()} $</div>
+                    </div>`;
+            } else {
+                totalQty += qty;
+                const isDW = document.getElementById(`talent-${id}`).value === 'dw';
+                const isAsex = type === 'asex';
+                let base = isAsex ? (isDW ? PRICES.asexDW : PRICES.asex) : (isDW ? PRICES.stdDW : PRICES.std);
+                
+                let srvList = [], srvTotal = 0;
+                if(document.getElementById(`ev-${id}`).checked) { srvTotal += PRICES.evs; srvList.push(`EV (* ${PRICES.evs.toLocaleString()} $)`); }
+                if(document.getElementById(`atq-${id}`).checked) { srvTotal += PRICES.moves; srvList.push(`ATQ (* ${PRICES.moves.toLocaleString()} $)`); }
+                if(document.getElementById(`xp-${id}`).checked) { srvTotal += PRICES.xp; srvList.push(`XP (* ${PRICES.xp.toLocaleString()} $)`); }
 
-            let priceOld = (base + srvTotal) * qty;
-            let priceFinal = ((base * (1 - currentDiscount)) + srvTotal) * qty;
-            totalFinal += priceFinal;
+                let priceOld = (base + srvTotal) * qty;
+                let priceFinal = ((base * (1 - currentDiscount)) + srvTotal) * qty;
+                totalFinal += priceFinal;
 
-            recap.innerHTML += `
-                <div class="recap-item">
-                    <span class="price-final">${priceFinal.toLocaleString()} $</span>
-                    ${currentDiscount > 0 ? `<span class="price-old">${priceOld.toLocaleString()} $</span>` : ''}
-                    <span class="badge-mini ${isAsex ? 'badge-asex' : 'badge-std'}">${isAsex ? 'Asexué' : 'Normal'}</span>
-                    <b>${qty}x ${nameInput.value || 'Pokémon'}</b>
-                    <div class="recap-subtext">
-                        ${natureInput.value || 'Nature'}${isDW ? ' | DW' : ''}
-                        ${srvList.length > 0 ? '<br><span style="color:var(--pk-green)">+ ' + srvList.join(' + ') + '</span>' : ''}
-                    </div>
-                </div>`;
+                recap.innerHTML += `
+                    <div class="recap-item">
+                        <span class="price-final">${priceFinal.toLocaleString()} $</span>
+                        ${currentDiscount > 0 ? `<span class="price-old">${priceOld.toLocaleString()} $</span>` : ''}
+                        <span class="badge-mini ${isAsex ? 'badge-asex' : 'badge-std'}">${isAsex ? 'Asexué' : 'Normal'}</span>
+                        <b>${qty}x ${name}</b>
+                        <div class="recap-subtext">
+                            ${document.getElementById(`nature-${id}`).value || 'Nature'}${isDW ? ' | DW' : ''}
+                            ${srvList.length > 0 ? '<br><span style="color:var(--pk-green)">+ ' + srvList.join(', ') + '</span>' : ''}
+                        </div>
+                    </div>`;
+            }
         });
         document.getElementById('grand-total').innerText = totalFinal.toLocaleString() + " $";
         document.getElementById('total-qty-badge').innerText = `${totalQty} Pokémon`;
@@ -323,45 +335,72 @@
     function copyTicket() {
         const client = document.getElementById('client-name').value || "Non spécifié";
         const breeder = document.getElementById('breeder-name').value || "Non spécifié";
-        let tBrut = 0, tFinal = 0, totalPokes = 0;
+        let tFinal = 0;
         let text = `═══ 🔘 TICKET ASTRALYA ═══\n👤 CLIENT : ${client}\n🛠️ BREEDER : ${breeder}\n📉 RÉDUCTION : ${currentDiscountName}\n\n`;
         
         document.querySelectorAll('.pk-card').forEach(row => {
             const id = row.id.split('-')[1];
+            const type = row.getAttribute('data-type');
             const qty = parseInt(document.getElementById(`qty-${id}`).value) || 1;
-            totalPokes += qty;
-            const isAsex = row.getAttribute('data-asex') === 'true';
             const name = document.getElementById(`name-${id}`).value.toUpperCase();
-            const isDW = document.getElementById(`talent-${id}`).value === 'dw';
-            
-            let base = isAsex ? (isDW ? PRICES.asexDW : PRICES.asex) : (isDW ? PRICES.stdDW : PRICES.std);
-            let srvLog = [], srvTotal = 0;
-            if(document.getElementById(`ev-${id}`).checked) { srvLog.push(`EV (${PRICES.evs.toLocaleString()} $)`); srvTotal += PRICES.evs; }
-            if(document.getElementById(`atq-${id}`).checked) { srvLog.push(`ATQ (${PRICES.moves.toLocaleString()} $)`); srvTotal += PRICES.moves; }
-            if(document.getElementById(`xp-${id}`).checked) { srvLog.push(`XP (${PRICES.xp.toLocaleString()} $)`); srvTotal += PRICES.xp; }
 
-            let baseReduite = base * (1 - currentDiscount);
-            let unitSansReduc = base + srvTotal;
-            let unitAvecReduc = baseReduite + srvTotal;
-            
-            tBrut += unitSansReduc * qty;
-            tFinal += unitAvecReduc * qty;
+            if (type === 'pkdx') {
+                const sub = qty * PRICES.pkdx;
+                tFinal += sub;
+                text += `• ${qty}x ${name} (PKDX)\n`;
+                text += `  > Sous-total : ${sub.toLocaleString()} $\n\n`;
+            } else {
+                const isAsex = type === 'asex';
+                const isDW = document.getElementById(`talent-${id}`).value === 'dw';
+                let base = isAsex ? (isDW ? PRICES.asexDW : PRICES.asex) : (isDW ? PRICES.stdDW : PRICES.std);
+                let srvLog = [], srvTotal = 0;
+                if(document.getElementById(`ev-${id}`).checked) { srvLog.push(`EV (* ${PRICES.evs.toLocaleString()} $)`); srvTotal += PRICES.evs; }
+                if(document.getElementById(`atq-${id}`).checked) { srvLog.push(`ATQ (* ${PRICES.moves.toLocaleString()} $)`); srvTotal += PRICES.moves; }
+                if(document.getElementById(`xp-${id}`).checked) { srvLog.push(`XP (* ${PRICES.xp.toLocaleString()} $)`); srvTotal += PRICES.xp; }
 
-            text += `• ${qty}x ${name} (${isAsex ? 'Asexué' : 'Normal'})\n`;
-            text += `  └─ Nature(s) : ${document.getElementById(`nature-${id}`).value}\n`;
-            text += `  └─ Prix Poke : ${base.toLocaleString()} $ ${currentDiscount > 0 ? '➔ '+baseReduite.toLocaleString()+' $' : ''}\n`;
-            srvLog.forEach(s => { text += `  └─ Service : + ${s}\n`; });
-            text += `  > Sous-total : ${(unitAvecReduc * qty).toLocaleString()} $\n\n`;
+                let baseReduite = base * (1 - currentDiscount);
+                let unitAvecReduc = baseReduite + srvTotal;
+                tFinal += unitAvecReduc * qty;
+
+                text += `• ${qty}x ${name} (${isAsex ? 'Asexué' : 'Normal'})\n`;
+                text += `  └─ Nature : ${document.getElementById(`nature-${id}`).value}\n`;
+                text += `  └─ Prix Poke : ${base.toLocaleString()} $ ${currentDiscount > 0 ? '➔ '+baseReduite.toLocaleString()+' $' : ''}\n`;
+                srvLog.forEach(s => { text += `  └─ Service : + ${s}\n`; });
+                text += `  > Sous-total : ${(unitAvecReduc * qty).toLocaleString()} $\n\n`;
+            }
         });
 
         text += `------------------------------\n`;
-        text += `📦 TOTAL POKÉMON : ${totalPokes}\n`;
-        text += `PRIX BRUT : ${tBrut.toLocaleString()} $\n`;
         text += `💰 PRIX FINAL : ${tFinal.toLocaleString()} $\n`;
         text += `══════════════════════════`;
 
         navigator.clipboard.writeText(text);
         alert("Ticket détaillé copié !");
+    }
+
+    function processImport() {
+        const text = document.getElementById('import-area').value;
+        const myName = document.getElementById('filter-breeder').value.trim().toLowerCase();
+        const blocks = text.split(/\n\s*\n/);
+        blocks.forEach(block => {
+            const lines = block.split('\n').map(l => l.trim()).filter(l => l !== "");
+            if (lines.length < 2) return;
+            let name = lines[0], rawNatures = "", rawTalents = "", breeder = lines[lines.length - 1];
+            const lowerBlock = block.toLowerCase();
+            const hasEV = lowerBlock.includes("ev"), hasXP = lowerBlock.includes("xp"), hasATQ = lowerBlock.includes("atq");
+            lines.forEach(l => {
+                if (l.toLowerCase().includes("nature")) rawNatures = l.replace(/nature/gi, "").replace(/[:]/g, "").trim();
+                if (l.toLowerCase().includes("talent")) rawTalents = l.replace(/talent/gi, "").replace(/[:]/g, "").trim();
+            });
+            if (myName !== "" && breeder.toLowerCase() !== myName) return;
+            let natures = rawNatures.split(/[/,]| et /).map(n => n.trim()).filter(n => n !== "");
+            let talents = rawTalents.split(/[/,]| et /).map(t => t.trim()).filter(t => t !== "");
+            let normals = talents.filter(t => !t.toLowerCase().includes("dw") && !t.toLowerCase().includes("(tc)"));
+            let tcs = talents.filter(t => t.toLowerCase().includes("dw") || t.toLowerCase().includes("(tc)"));
+            if (normals.length > 0) addRow(false, { name, nature: natures.join(" / "), dw: false, qty: natures.length, evs: hasEV, xp: hasXP, atq: hasATQ });
+            tcs.forEach(() => addRow(false, { name, nature: natures.join(" / "), dw: true, qty: natures.length, evs: hasEV, xp: hasXP, atq: hasATQ }));
+        });
+        closeModal();
     }
 
     function resetApp() { if(confirm("Vider ?")) { document.getElementById('pokes-list').innerHTML = ""; update(); } }
